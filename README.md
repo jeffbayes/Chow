@@ -1,7 +1,6 @@
 Possible Names:
 
-Die Clickbait, Die!
-Upworthless
+Die Clickbait, Die! // Upworthless
 
 The basic idea:
 
