@@ -41,10 +41,12 @@ else:
 
 
 **Database Example:**
-| clickbait     | OC            | 
-| ------------- |:-------------
-| https://www.upworthy.com/when-a-family-of-8-kids-turns-on-their-mother-for-money-see-what-her-granddaughter-does?c=reccon1    | https://vimeo.com/92570042|
-|https://www.upworthy.com/move-over-barbie-youre-obsolete  |https://www.youtube.com/watch?v=y-AtZfNU3zw |
+
+
+clickbait url | OC url
+------------- | -------------
+https://www.upworthy.com/5-minutes-of-what-the-media-actually-does-to-women-8?c=reccon1  | https://www.youtube.com/watch?v=jWKXit_3rpQ
+https://www.upworthy.com/move-over-barbie-youre-obsolete  |https://www.youtube.com/watch?v=y-AtZfNU3zw
 
 
 ###Reasons I like this approach:
