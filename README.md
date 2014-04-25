@@ -18,9 +18,15 @@ After the data is stored that first time, we then access it in one of two method
 #Tanner's Method
 
 We merely scrape the page to find the data of the orginal content and then pair the url for the orignal content with the clickbait content. 
-Example 
+
+
+Example: 
 This is the upworthy url: https://www.upworthy.com/when-a-family-of-8-kids-turns-on-their-mother-for-money-see-what-her-granddaughter-does?c=reccon1
+
+
 This is the orginal content url: https://vimeo.com/92570042
+
+
 We can obtain the orginal content url by finding Upworthy's anchor tag with the text "Orginal" or the just take it from the iframe since it's embeded. The latter will be a better general solution as you're going to always need an iframe for 
 embeded videos.
 
@@ -57,7 +63,7 @@ However if they're just rehosting another article I'm sure we can address this
 + Upworthy could try to counter us with url obfusication. But this means 2 things
     ..+ Our extension is succseful enough for them to take notice
     ..+they'd get filterd out by Facebooks spam filters thier biggest revenue source
- 
+
 
 
 
