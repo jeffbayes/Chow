@@ -1,6 +1,5 @@
-Possible Names:
 
-Die Clickbait, Die! // Upworthless
+#Die Clickbait, Die! // Upworthless
 
 
 #The basic idea:
@@ -42,10 +41,11 @@ else:
 
 **Database Example:**
 
-
-| clickbait url                                                                         | OC url        |
-| --------------------------------------------------------------------------------------| ------------------------------|
-|https://www.upworthy.com/5-minutes-of-what-the-media-actually-does-to-women-8?c=reccon1| https://www.youtube.com/watch?v=jWKXit_3rpQ |
+clickbait url | OC url
+------------- | -------------
+https://www.upworthy.com/5-minutes-of-what-the-media-actually-does-to-women-8?c=reccon1  | https://www.youtube.com/watch?v=jWKXit_3rpQ
+https://www.upworthy.com/move-over-barbie-youre-obsolete  |https://www.youtube.com/watch?v=y-AtZfNU3zw
+>>>>>>> bd19b311df2c327a6ff595ff6a77730b4fcee898
 
 
 ###Reasons I like this approach:
@@ -80,3 +80,22 @@ pages. A few thoughts on that: we could cap a table at ~100-500 (whatever is rea
 once, and then the least recently accessed page could be dropped from our database - basically caching.
 This wouldn't be a coverall for all pageviews to Upworthy/etc., but could put a serious dent in what
 they are getting.
+
+#Potential Problems
+##Nontechnical Problems
+If the whole point of this is to take page views (and thus, revenue) away from Upworthy, then we run into
+a major problem. After researching their revenue model, they frequently take videos, rehost them on
+YouTube or Vimeo, and the number of views there is how they measure their success. Moreover, they do not
+create any revenue by driving users to the site itself. Their upcoming revenue model involves getting
+companies to create what are essentially "upworthy" video advertisements that they'll try to make 
+"irresistably shareable."
+
+Mind you, we will continue to take away page views from their site, which could be a postive, but they still
+have another postive conversion metric to look at, which is the most important part of their business, and
+ultimately drives their continued growth.
+
+##Technical Problems
+Driven by the non-technical problems, we could try to find the ORIGINAL original content (OC). However,
+that presents a whole new challenge. Most times, since Upworthy has made a name for itself, it's now
+content made by a company or other group specifically for Upworthy. Thus, finding the OC becomes a giant
+pain in the ass.
