@@ -11,10 +11,13 @@ ADMINISTRATIVELY add menu items, as a one-to-many relationship with Restaurant I
 Average rating for dish, as one-to-one relationship with menu items (or integrated w/ menu items)<br/>
 Number of ratings, overall rating stored in the rating (+1 and +rating for average rating)<br/>
 Expected URLs
-*chowahua.com
-*chowahua.com/restaurant_id
-*chowahua.com/restaurant_id/name_of_dish
+* chowahua.com
+* chowahua.com/restaurant_id
+* chowahua.com/restaurant_id/name_of_dish
+
+
 ####L1: Prettifying alla dis'
+We're not concerned with the next iteration at this point. Once we have a superminimal product with full documentation, we'll move on to planning and attacking the next iteration.
 
 ###Informal Use Cases
 ####Restaurants: chowahua.com/NameOfRestaurant. 
