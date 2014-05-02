@@ -1,4 +1,4 @@
-#Chowahua // Chowador // Godfilla
+#Chowahua
 All ideas come with a cute animal drawing as the website mascot (even a cute Godzilla)!
 
 ###Informal Use Cases
