@@ -10,8 +10,8 @@ $.ajax({
            data: {},
            dataType: "json",
            xhrFields: {
-       		withCredentials: true
-    		},
+          withCredentials: true
+        },
            success: function (data) {
                processData(data);
            }
@@ -22,11 +22,24 @@ function processData(data){
  console.log(data);
 }
 */
+$(document).ready( function () {
+  //construct data table object with options
+  $('#table_id').DataTable( {
+    paging: false,
+    scrollY: 400,
+    searching: false
+  });
+  //register click event for table rows.
+  $('#table_id tbody').on( 'click', 'tr', function () {
+    alert( $(this).html() );
+  });
+});
+
 function searchText() {
-	var searchValue = document.getElementById('search').value;
-	console.log(searchValue);
-  var string
-	var responseText = httpGet("https://api.foursquare.com/v2/venues/40a55d80f964a52020f31ee3?client_id=KR5QNGVNULHKBZ1K5JBLAQ1WU4BAZEJQXDFMJ5QD35L4INCP&client_secret=1GB2PJNNLNIVEQQ0FZTI02XZQDLAUHAREO5XXDAXTE1SHXBF&v=20130815");
+  var searchValue = document.getElementById('search').value;
+  console.log(searchValue);
+  var string;
+  var responseText = httpGet("https://api.foursquare.com/v2/venues/40a55d80f964a52020f31ee3?client_id=KR5QNGVNULHKBZ1K5JBLAQ1WU4BAZEJQXDFMJ5QD35L4INCP&client_secret=1GB2PJNNLNIVEQQ0FZTI02XZQDLAUHAREO5XXDAXTE1SHXBF&v=20130815");
 }
 
 function httpGet(theUrl) {
@@ -38,4 +51,3 @@ function httpGet(theUrl) {
     xmlHttp.send();
     return xmlHttp.responseText;
 }
-*/
