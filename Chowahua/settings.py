@@ -70,7 +70,7 @@ DATABASES = {
     }
 }
 # Taken from the setting up Django with Heroku project here: https://devcenter.heroku.com/articles/getting-started-with-django#procfile
-DATABASES['default'] =  dj_database_url.config()
+# DATABASES['default'] =  dj_database_url.config()
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
