@@ -1,1 +1,4 @@
+cis_422
+venv
 *.pyc
+staticfiles
