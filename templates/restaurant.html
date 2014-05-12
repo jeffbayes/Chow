@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+        <script type="text/javascript" src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
+    </head>
+    <body>
+        <h1>{{ restaurant_name }}</h1>
+        <div class="container">
+            <div class="jumbotron">
+                <br>
+                <br>
+        <table id="table_id" class="display">
+            <thead>
+                <tr>
+                    <th>The Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>Cheeseburger <br> <i>It's a burger...with cheese.</i> 6.00</td>
+                    </tr>
+                    <tr>
+                        <td>Lasagna <br> <i>Definitely your mother's lasagna. Not all that remarkable</i> 7.50</td>
+                    </tr>
+                    <tr>
+                        <td>Blackberry Pie <br> <i>Made with home-made Smuckers jam.</i> 4.00</td>
+                    </tr>
+            </tbody>
+        </table>
+            </div>
+        </div>
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <!-- DataTables -->
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+        {% load staticfiles %}
+        <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>
+

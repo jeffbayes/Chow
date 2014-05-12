@@ -27,11 +27,14 @@ $(document).ready( function () {
   $('#table_id').DataTable( {
     paging: false,
     scrollY: 400,
-    searching: false
+    searching: false,
+    "ordering": false
   });
   //register click event for table rows.
   $('#table_id tbody').on( 'click', 'tr', function () {
-    alert( $(this).html() );
+    console.log( $(this).html() );
+    var cellText = ($('#table_id td').html());
+    window.location.href = "Caspian";
   });
 });
 
@@ -39,7 +42,7 @@ function searchText() {
   var searchValue = document.getElementById('search').value;
   console.log(searchValue);
   var string;
-  var responseText = httpGet("https://api.foursquare.com/v2/venues/40a55d80f964a52020f31ee3?client_id=KR5QNGVNULHKBZ1K5JBLAQ1WU4BAZEJQXDFMJ5QD35L4INCP&client_secret=1GB2PJNNLNIVEQQ0FZTI02XZQDLAUHAREO5XXDAXTE1SHXBF&v=20130815");
+  // var responseText = httpGet("https://api.foursquare.com/v2/venues/40a55d80f964a52020f31ee3?client_id=KR5QNGVNULHKBZ1K5JBLAQ1WU4BAZEJQXDFMJ5QD35L4INCP&client_secret=1GB2PJNNLNIVEQQ0FZTI02XZQDLAUHAREO5XXDAXTE1SHXBF&v=20130815");
 }
 
 function httpGet(theUrl) {
