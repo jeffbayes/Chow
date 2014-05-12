@@ -1,4 +1,0 @@
-Notes
-
-Jeremy already has a basic frame of an "Index" page done. Keep that.
-Need to do: configure views to use generic views, connect to templates.
