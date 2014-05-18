@@ -19,13 +19,16 @@
         <h1>Chowawua!</h1>
         <div class="container">
             <div class="jumbotron">
-                <form target = "self">
-                    <input type="search" id='search' autocomplete="off" placeholder="Restaurants..."  />
-                    <button onclick="searchText()">Search</button>
+                
+            <div id="wrap">
+                <form action="">
+                    <input id="search" name="search" type="text" placeholder="Which Restaurant?" autocomplete="off"><input id="search_submit" value="Rechercher" type="submit">
+                    <br>
                 </form>
+            </div>
                 <br>
                 <br>
-        <table id="table_id" class="display">
+        <table id="restaurant_table" class="display">
             <thead>
                 <tr>
                     <th>Restaurant Name</th>

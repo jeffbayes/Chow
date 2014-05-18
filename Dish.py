@@ -79,6 +79,7 @@ if __name__ == '__main__':
     item =  menu_items['objects'][0]
     venueID = item["venue"]["id"]
     details = venue_client.get_details('dc241e328c5cc445aea5')
+    print (details)
     # hours = details["objects"][0]["open_hours"]["Monday"]
     # dish.parse_open_hours(hours)
 
