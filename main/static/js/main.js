@@ -23,20 +23,50 @@ function processData(data){
 }
 */
 $(document).ready( function () {
+  $( "#search" ).addClass('transitionAnim');
+
   //construct data table object with options
-  $('#table_id').DataTable( {
+  $('#restaurant_table').DataTable( {
     paging: false,
     scrollY: 400,
     searching: false,
     "ordering": false
   });
   //register click event for table rows.
-  $('#table_id tbody').on( 'click', 'tr', function () {
+  $('#restaurant_table tbody').on( 'click', 'tr', function () {
     console.log( $(this).html() );
-    var cellText = ($('#table_id td').html());
+    var cellText = ($('#restaurant_table td').html());
     window.location.href = "Caspian";
   });
+
+  $('#menu_table').DataTable( {
+    paging: false,
+    scrollY: 400,
+    searching: false,
+    "ordering": false
+  });
+
+    $('.star').raty({
+      path: STATIC_URL+'/img/',
+      click: function(score, evt) {
+        parentNode = $(this).parent(); 
+        parentHtml = parentNode.html();
+        $(parentHtml).each(function(index, value) {
+          $(value).each(function(i, j) {
+            var className = $(j).attr('class');
+            /*! STORE RATING HERE !*/
+            if (className == 'title') {
+              console.log($(j).html());
+              console.log("Score: " + score);
+            }
+          });
+        });
+      }
+    });
 });
+
+// var dishLabel = document.getElementsByClassName('dish-name');
+// console.log(dishLabel);
 
 function searchText() {
   var searchValue = document.getElementById('search').value;

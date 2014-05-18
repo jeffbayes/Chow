@@ -9,6 +9,7 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+        <script language="javascript">var STATIC_URL = "{{ STATIC_URL|escapejs }}";</script>
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 
@@ -16,12 +17,26 @@
         <script type="text/javascript" src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
     </head>
     <body>
-        <h1>{{ restaurant_name }}</h1>
         <div class="container">
             <div class="jumbotron">
+            <div class="restaurantHeader">
+            <div class="restaurantInfo">
+                <h1>{{ restaurant_name }}</h1>
+                <div class="restaurantDetails">
+                    <div class="address">
+                        <span class="streetAddress">1340 Alder St</span>
+                        <span class="locality">Eugene</span>
+                        <span class="region">OR</span>
+                        <span class="postalCode">97401</span>
+                    </div>
+                    <div class="phoneNumber">541-666-1313</div>
+                    <div class="cusineType">Middle-Eastern, Mediterranean</div>
+                </div>
+            </div>
+        </div>
                 <br>
                 <br>
-        <table id="table_id" class="display">
+        <table id="menu_table" class="display">
             <thead>
                 <tr>
                     <th>The Menu</th>
@@ -29,17 +44,45 @@
             </thead>
             <tbody>
                     <tr>
-                        <td>Cheeseburger <br> <i>It's a burger...with cheese.</i> 6.00</td>
+                        <td>
+                            <div class="entry">
+                                <div class="menuHeader">
+                                    <div class="price">7.95</div>
+                                    <span class="title">Cheeseburger</span>
+                                    <div class="star"> </div>
+                                </div>
+                                <div class="description">Delicious and delecious for the win.</div>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Lasagna <br> <i>Definitely your mother's lasagna. Not all that remarkable</i> 7.50</td>
+                        <td>
+                            <div class="entry">
+                                <div class="menuHeader">
+                                    <div class="price">5.00</div>
+                                    <span class="title">Hamburger</span>
+                                    <div class="star"> </div>
+                                </div>
+                                <div class="description">Who orders this?</div>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Blackberry Pie <br> <i>Made with home-made Smuckers jam.</i> 4.00</td>
+                        <td>
+                            <div class="entry">
+                                <div class="menuHeader">
+                                    <div class="price">12.95</div>
+                                    <span class="title">Mac N' Cheese With Truffle Oil</span>
+                                    <div class="star"> </div>
+                                </div>
+                                <div class="description">This is definitely not pretentious. Serverd with water on the side in a mason jar.</div>
+                            </div>
+                        </td>
                     </tr>
             </tbody>
         </table>
-            </div>
+        <br>
+            <!-- <div id="star"></div> -->
         </div>
         <!-- DataTables CSS -->
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">

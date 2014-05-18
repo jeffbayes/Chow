@@ -1,0 +1,23 @@
+from django.shortcuts import render
+from django.views.generic import TemplateView
+from .models import Restaurant, MenuItem
+
+class IndexView(TemplateView):
+    ### Home page.
+    template_name = "index.html"
+<<<<<<< HEAD
+
+=======
+    
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['restaurants'] = Restaurant.objects.all()
+        return context
+    
+>>>>>>> 500a8ce76b711187e74351343d22b5bd3b4a8c12
+"""
+class ThrowawayView(TemplateView):
+    ### Useful for testing things.
+    template_name = "throwaway.html"
+    """
+
