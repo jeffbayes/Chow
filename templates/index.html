@@ -11,7 +11,6 @@
 
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-
         <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
         <script type="text/javascript" src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
     </head>
@@ -21,8 +20,9 @@
             <div class="jumbotron">
                 
             <div id="wrap">
-                <form action="">
-                    <input id="search" name="search" type="text" placeholder="Which Restaurant?" autocomplete="off"><input id="search_submit" value="Rechercher" type="submit">
+                <form action="/search/" method = "get">
+                    <input id="search" name="search" type="text" placeholder="Which Restaurant?" autocomplete="off">
+                    <input id="search_submit" value="Rechercher" type="submit">
                     <br>
                 </form>
             </div>

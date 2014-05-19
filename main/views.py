@@ -13,15 +13,24 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['restaurants'] = Restaurant.objects.all()
         return context
+        
+class SearchView(TemplateView):
+    ### Search view. Currently in testing.
+    template_name = 'search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data(**kwargs)
+        context['request'] = self.request
+        context['search_term'] = self.request.GET['search']
+        return context
 
 
 class RestaurantView(TemplateView):
-	###Restaurant Profile Page
+	### Restaurant Profile Page
 	template_name = "restaurant.html"
 
 	def get_context_data(self, **kwargs):
 		context = super(RestaurantView, self).get_context_data(**kwargs)
-		print ("printing context: ", context)
 		context['restaurant_name'] = context['restaurant_name'].replace('_', ' ')
 
 		return context
