@@ -86,18 +86,19 @@ class Venue:
         Takes Locu json and creates attributes dictonary.
         """
 
-        self.attrs['name'] = locuResult["name"]
-        self.attrs["description"] = locuResult["description"]
-        self.attrs["price"] = locuResult["price"]
-        self.attrs["venue"] = locuResult["venue"]["name"]
-        self.attrs["venue_id"] = locuResult ["venue"]["id"]
-        self.attrs["id"] = locuResult["id"]
+        self.name = locuResult["name"]
+        self.locality = locuResult["locality"]
+        self.street_address = locuResult["street_address"]
+        self.postal_code = locuResult["postal_code"]
+        self.venue_id = locuResult["id"]
 
+        """
         details = self.venue_client.get_details(locuResult["venue"]["id"])
         if self.searchDay:
             hours_today = details["objects"][0]["open_hours"][self.searchDay]
             if hours_today:        
                 self.attrs["available"] = self.set_avalability(hours_today,self.searchTime)
+                """
 
     def set_avalability(self,hours,time):
         """
