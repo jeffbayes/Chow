@@ -1,6 +1,5 @@
 from locu import MenuItemApiClient
 from locu import VenueApiClient
-from LocuHelper import LocuHelper
 import datetime
 import time
 
@@ -10,7 +9,7 @@ KEY = '2d36afa81b05f641ec3382d9992b8cec3d64a4e4'
 
 class Dish(object):
 
-    def __init__(self,caller,locu_object ='',searchTime='',**attrs):
+    def __init__(self,locu_object,caller,searchTime=None):
         self.venue_client = VenueApiClient(KEY)
         self.locu_object = locu_object
         self.parse_locu(self.locu_object)
@@ -19,13 +18,13 @@ class Dish(object):
             self.load_rating_from_id()
 
 
-        elif usage == "menu":
+        elif caller == "venue":
             self.load_rating_from_venue()
 
 
     def get_attr(self,attr):
-        self.attrs.get(attr,"Data Not Available")
-
+        instance_variables = self.__dict__
+        return instance_variables.get(attr)
 
 
     def parse_locu(self,locu_object):
@@ -42,14 +41,6 @@ class Dish(object):
         self.venue_id = self.locu_object["venue"].get("id")
         self.id = self.locu_object.get("id")
 
-        details = self.venue_client.get_details(self.locu_object["venue"]["id"])
-
-        # if self.searchDay:
-        #     hours_today = details["objects"][0]["open_hours"][self.searchDay]
-        #     if hours_today:        
-        #         self.attrs["available"] = LocuHelper.isOpen(hours_today,self.searchTime)
-
-
     def load_rating_from_id(self):
         """
         load the rating and number of ratings from database.
@@ -61,18 +52,6 @@ class Dish(object):
         
             
 
-
-
-if __name__ == '__main__':
-    # dish = Dish()
-    venue_client = VenueApiClient(KEY)
-    menu_item_client = MenuItemApiClient(KEY)
-    menu_items = menu_item_client.search(locality = 'San Francisco', name = 'espresso', price__gte = 6)  
-    item =  menu_items['objects'][0]
-    venueID = item["venue"]["id"]
-    details = venue_client.get_details('dc241e328c5cc445aea5')
-    # hours = details["objects"][0]["open_hours"]["Monday"]
-    # dish.parse_open_hours(hours)
 
 
 
