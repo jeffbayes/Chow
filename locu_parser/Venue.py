@@ -59,6 +59,7 @@ class Venue(object):
                         item["venue"] = self.locu_object
                         if item["type"] == "ITEM":
                             dish = Dish(item,'venue')
+
                             self.menu.append(dish)
 
 
@@ -80,6 +81,7 @@ if __name__ == '__main__':
     v.set_menu()
     for i in range(50): print
     d = v.menu[0]
+    prtin
     print d.get_attr('venue')
 
 
