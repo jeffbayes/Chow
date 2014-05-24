@@ -27,19 +27,30 @@ class IndexView(TemplateView):
         
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        if self.request.GET.get('search'):
-            search_term = self.request.GET['search']
-            venues = self.venue_search(search_term)
+        search_terms = {} #dict.fromkeys(['restaurant', 'city', 'state'])
+        if self.request.GET.get('searchCity', False):
+            search_terms['city'] = self.request.GET.get('searchCity', False)
+        
+        print("Does state exist?: ", self.request.GET.get('selectState', False))
+
+        if self.request.GET.get('selectState', False):
+            search_terms['state'] = self.request.GET.get('selectState', False)
+        if self.request.GET.get('searchRestaurant'):
+            search_terms['restaurant'] = self.request.GET['searchRestaurant']
+            venues = self.venue_search(search_terms)
             context['venues'] = venues
             context['request'] = self.request
-            context['search'] = self.request.GET['search']
+            context['search'] = self.request.GET['searchRestaurant']
+
+        
         return context
         
-    def venue_search(self, search_term):
+    def venue_search(self, search_terms):
         venue_list = []
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
         venue_client = VenueApiClient(KEY)
-        response = venue_client.search(locality = 'Eugene', region = 'OR', name = search_term)
+        print ("Printing search term: ", search_terms)
+        response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['restaurant'])
         venues = response['objects']
         for venue_dict in venues:
             v = Venue(venue_dict, t)
