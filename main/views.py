@@ -56,7 +56,24 @@ class IndexView(TemplateView):
             v = Venue(venue_dict, t)
             venue_list.append(v)
         return venue_list
- 
+
+
+class RestaurantView(TemplateView):
+    ### Restaurant Profile Page
+    template_name = "restaurant.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(RestaurantView, self).get_context_data(**kwargs)
+        ## venue_id = context['restaurant_name']
+        context['request'] = self.request
+        return context
+    
+"""
+class ThrowawayView(TemplateView):
+    ### Useful for testing things.
+    template_name = "throwaway.html"
+    """
+
 """       
 class RestaurantSearchView(TemplateView):
     ### Restaurant search view. Currently in testing.
@@ -78,20 +95,3 @@ class RestaurantSearchView(TemplateView):
         venues = venue_client.search(locality = 'Eugene', name = search_term)  
         return venues
 """
-
-
-class RestaurantView(TemplateView):
-	### Restaurant Profile Page
-	template_name = "restaurant.html"
-
-	"""def get_context_data(self, **kwargs):
-		context = super(RestaurantView, self).get_context_data(**kwargs)
-        venue_id = context['restaurant_name']
-        return context"""
-    
-"""
-class ThrowawayView(TemplateView):
-    ### Useful for testing things.
-    template_name = "throwaway.html"
-    """
-

@@ -15,7 +15,7 @@ class Venue(object):
         if searchTime:
             self.searchTime = time.strftime( "%H:%M:%S",searchTime)
             self.searchDay = time.strftime("%A",searchTime)
-        self.menu = []
+        self.menu = [] ## Filled by set_menu()
         
 
 
@@ -52,7 +52,7 @@ class Venue(object):
         """
         
 
-        for menu in self.details["objects"][0]["menus"]:
+        for menu in self.details["objects"][0]["menus"]: ## calls self.details
             for section in menu["sections"]:
                 for sub_section in section["subsections"]:
                     for item in sub_section["contents"]:
