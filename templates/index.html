@@ -11,42 +11,42 @@
 
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-
         <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
         <script type="text/javascript" src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
     </head>
     <body>
-        <h1>Chowawua!</h1>
+        <h1>Chowahua!</h1>
         <div class="container">
             <div class="jumbotron">
-                <form target = "self">
-                    <input type="search" id='search' autocomplete="off" placeholder="Restaurants..."  />
-                    <button onclick="searchText()">Search</button>
-                </form>
+                
+                <div id="wrap">
+                    <form class="form-signin span8" id="user_form" method="get" action="">
+                        <input id="search" name="search" type="text" placeholder="Which Restaurant?">
+                        <input id="search_submit" value="Rechercher" type="submit">
+                        <br>
+                    </form> <!-- user_form -->
+                </div> <!-- wrap -->
                 <br>
                 <br>
-        <table id="table_id" class="display">
-            <thead>
-                <tr>
-                    <th>Restaurant Name</th>
-                    <th>Cuisine</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for r in restaurants %}
+                <table id="restaurant_table" class="display">
+                <thead>
                     <tr>
-                        <td>{{ r.restaurant_name }}</td>
-                        <td>{{ r.restaurant_cuisine }}</td>
-                        <td>{{ r.restaurant_price }}</td>
+                        <th>Restaurant Name</th>
+                        <th>Locality</th>
+                        <th>ZIP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for v in venues %}
+                    <tr>
+                        <td><a href="{{ v.venue_id }}">{{ v.name }}</a></td>
+                        <td>{{ v.locality }}</td>
+                        <td>{{ v.postal_code }}</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-        <br>
-        {% for r in restaurants %}
-            <li><a href="Caspian">{{ r.restaurant_name }}</a></li>
-            {% endfor %}
+                </tbody>
+                </table>
+                <br>
             </div>
         </div>
         <!-- DataTables CSS -->
