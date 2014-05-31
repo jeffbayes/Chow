@@ -16,6 +16,8 @@ class Venue(object):
         if searchTime:
             self.searchTime = time.strftime( "%H:%M:%S",searchTime)
             self.searchDay = time.strftime("%A",searchTime)
+        self.menu = [] ## Filled by set_menu()
+
         
     def get_attr(self,attr):
         if attr in self.attrs:
