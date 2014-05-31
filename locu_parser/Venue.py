@@ -85,7 +85,6 @@ if __name__ == '__main__':
     v.set_menu()
     for i in range(50): print
     d = v.menu[0]
-    prtin
     print d.get_attr('venue')
 
 

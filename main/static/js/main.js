@@ -7,9 +7,6 @@ $(document).ready( function () {
     "ordering": false
   });
 
-  var search_terms = '{{ js_search_terms|escapejs }}';
-  console.log(search_terms);
-
   //there is no data in the table
   if ($('#restaurant_table tr').length === 2) {
     //hide the dataTable

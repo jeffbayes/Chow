@@ -2,10 +2,10 @@ from django.shortcuts import render, render_to_response
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.template import RequestContext
-from django.core import serializers
 
 from .models import Restaurant, MenuItem
-from .parsers import Venue, Dish
+from locu_parser.Venue import Venue
+from locu_parser.Dish import Dish
 from locu import MenuItemApiClient
 from locu import VenueApiClient
 
@@ -48,8 +48,6 @@ class IndexView(TemplateView):
                 context['dishes'] = dishes
 
             context['search_terms'] = search_terms
-            json_serializer = serializers.get_serializer("json")()
-            # js_search_terms = json_serializer.serialize(search_terms, ensure_ascii=False)
             context['request'] = self.request
             context['search'] = self.request.GET['searchQuery']
         return context
@@ -61,7 +59,8 @@ class IndexView(TemplateView):
         response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['search_query'])
         venues = response['objects']
         for venue_dict in venues:
-            v = Venue(venue_dict, t)
+            print(venue_dict)
+            v = Venue(venue_dict['id'], t)
             venue_list.append(v)
         return venue_list
 
@@ -114,9 +113,10 @@ class RestaurantView(TemplateView):
         print ("runnin")
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
         venue_client = VenueApiClient(KEY)
-        details = venue_client.get_details('715b3fc8c0798faf91ae')
-        print(details)
-        return details
+        restaurantProfile = Venue('715b3fc8c0798faf91ae', t)
+        print(restaurantProfile.phone)
+        print(restaurantProfile.address)
+        return restaurantProfile
     
 """
 class ThrowawayView(TemplateView):
