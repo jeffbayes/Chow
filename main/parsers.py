@@ -91,6 +91,10 @@ class Venue:
         self.street_address = locuResult["street_address"]
         self.postal_code = locuResult["postal_code"]
         self.venue_id = locuResult["id"]
+        if (locuResult['phone']):
+            self.phone = locuResult['phone']
+        else:
+            self.phone = ''
 
         """
         details = self.venue_client.get_details(locuResult["venue"]["id"])

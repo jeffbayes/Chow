@@ -37,7 +37,7 @@ $(document).ready( function () {
     $('#restaurant_table').hide();
     restTable.columns().visible(false);
     //animate the search bar
-    $( "input[name=searchRestaurant]" ).focus(function() {
+    $( "input[name=searchQuery]" ).focus(function() {
     $( "input[name=searchCity]").css({
       '-webkit-animation-name': 'expandSearchBar',
       '-webkit-animation-duration': '1s',
@@ -49,7 +49,7 @@ $(document).ready( function () {
       });
     });
   } else {
-    $( "input[name=searchRestaurant]" ).css({
+    $( "input[name=searchQuery]" ).css({
       'width': '350px'
     });
     $( "input[name=searchCity]" ).css({
@@ -57,12 +57,21 @@ $(document).ready( function () {
     });
   }
 
+  $("input[value='dishSearch']" ).click(function() {
+    $("input[name='searchQuery']").attr("placeholder", "Which Dish?");
+  });
+  $("input[value='restaurantSearch']" ).click(function() {
+    $("input[name='searchQuery']").attr("placeholder", "Which Restaurant?");
+  });
+
+  /*
   //register click event for table rows.
   $('#restaurant_table tbody').on( 'click', 'tr', function () {
     console.log( $(this).html() );
     var cellText = ($('#restaurant_table td').html());
-    window.location.href = "Caspian";
+    window.location.href = "cellText";
   });
+*/
 
 
   $('#menu_table').DataTable( {

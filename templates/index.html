@@ -21,11 +21,19 @@
                 
                 <div id="wrap">
                     <form class="form-signin span8" id="user_form" method="get" action="">
-                        <input id="search" name="searchRestaurant" type="text" placeholder="Which Restaurant?">
-                        <br>
-                        <br>
-                        <input class="search" name="searchCity" type="text" placeholder="Which City?">
+
+                        <div id = 'search-type-toggle'>
+                        <span style="color:gray; padding-right:18px;"> Search by: </span>
+                        <input id="search-type-toggle-cbox" type="radio" name="searchType" value="restaurantSearch" checked>
+                        <label for="restaurant"><span><span></span></span>Restaurant</label> 
+
+                        <input id="search-type-toggle-cbox" type="radio" name="searchType" value="dishSearch">
+                        <label for="dish"><span><span></span></span>Dish</label>
+                        </div>
+
+                        <input id="search" name="searchQuery" type="text" placeholder="Which Restaurant?">
                         <input class="search_submit" value="Rechercher" type="submit">
+                        <input class="search" name="searchCity" type="text" placeholder="Which City?">
                         <br>
                         <br>
                         <select id='selectState' name="selectState">
@@ -90,16 +98,16 @@
                 <thead>
                     <tr>
                         <th>Restaurant Name</th>
-                        <th>Locality</th>
-                        <th>ZIP</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for v in venues %}
                     <tr>
                         <td><a href="{{ v.venue_id }}">{{ v.name }}</a></td>
-                        <td>{{ v.locality }}</td>
-                        <td>{{ v.postal_code }}</td>
+                        <td>{{ v.street_address }}</td>
+                        <td>{{ v.phone }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

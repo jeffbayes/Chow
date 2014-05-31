@@ -27,35 +27,52 @@ class IndexView(TemplateView):
         
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        search_terms = {} #dict.fromkeys(['restaurant', 'city', 'state'])
+        search_terms = {} #dict.fromkeys(['search_query', 'city', 'state', searchType])
+        
+        # !! Get search paramaters !! #
+        if self.request.GET.get('searchType', False):
+            search_terms['searchType'] = self.request.GET.get('searchType', False)
         if self.request.GET.get('searchCity', False):
             search_terms['city'] = self.request.GET.get('searchCity', False)
-        
-        print("Does state exist?: ", self.request.GET.get('selectState', False))
-
         if self.request.GET.get('selectState', False):
             search_terms['state'] = self.request.GET.get('selectState', False)
-        if self.request.GET.get('searchRestaurant'):
-            search_terms['restaurant'] = self.request.GET['searchRestaurant']
-            venues = self.venue_search(search_terms)
-            context['venues'] = venues
-            context['request'] = self.request
-            context['search'] = self.request.GET['searchRestaurant']
 
-        
+        if self.request.GET.get('searchQuery'):
+            search_terms['search_query'] = self.request.GET['searchQuery']
+            if (search_terms['searchType'] == 'restaurantSearch'):
+                venues = self.venue_search(search_terms)
+                context['venues'] = venues
+            elif (search_terms['searchType'] == 'dishSearch'): 
+                dishes = self.dish_search(search_terms)
+                context['dishes'] = dishes
+            context['request'] = self.request
+            context['search'] = self.request.GET['searchQuery']
         return context
         
     def venue_search(self, search_terms):
         venue_list = []
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
         venue_client = VenueApiClient(KEY)
-        print ("Printing search term: ", search_terms)
-        response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['restaurant'])
+        response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['search_query'])
         venues = response['objects']
         for venue_dict in venues:
             v = Venue(venue_dict, t)
             venue_list.append(v)
         return venue_list
+
+    def dish_search(self, search_terms):
+        return []
+        '''
+        dish_list = []
+        t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
+        venue_client = VenueApiClient(KEY)
+        response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['search_query'])
+        dishes = response['objects']
+        for dish_dict in dishes:
+            d = Dish(dish_dict, t)
+            dish_list.append(d)
+        return dish_list
+        '''
  
 """       
 class RestaurantSearchView(TemplateView):
@@ -81,13 +98,23 @@ class RestaurantSearchView(TemplateView):
 
 
 class RestaurantView(TemplateView):
-	### Restaurant Profile Page
-	template_name = "restaurant.html"
+    template_name = "restaurant.html"
 
-	"""def get_context_data(self, **kwargs):
-		context = super(RestaurantView, self).get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(RestaurantView, self).get_context_data(**kwargs)
+        print ('runnin get_context_data')
         venue_id = context['restaurant_name']
-        return context"""
+        print(venue_id)
+        response = self.get_venue_info_and_menu(venue_id)
+        return context
+
+    def get_venue_info_and_menu(self, venue_id):
+        print ("runnin")
+        t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
+        venue_client = VenueApiClient(KEY)
+        details = venue_client.get_details('715b3fc8c0798faf91ae')
+        print(details)
+        return details
     
 """
 class ThrowawayView(TemplateView):
