@@ -11,12 +11,13 @@ class Venue(object):
     def __init__(self,venue_id,searchTime=None):
         self.venue_client = VenueApiClient(KEY)
         self.locu_object = self.venue_client.get_details(venue_id)["objects"][0]
+        self.menu = [] ## Filled by set_menu()
         self.set_attrs()
         
         if searchTime:
             self.searchTime = time.strftime( "%H:%M:%S",searchTime)
             self.searchDay = time.strftime("%A",searchTime)
-        self.menu = [] ## Filled by set_menu()
+       
 
         
     def get_attr(self,attr):
