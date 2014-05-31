@@ -1,27 +1,3 @@
-/*
-$( document ).ready(function() {
-    console.log( "ready!" );
-});
-
-$.ajax({
-           type: 'GET',
-           url: "https://api.locu.com/v1_0/venue/search/?name=Tasty%20Thai&locality=Eugene&api_key=fab61d3c1bc8ead95a1c95d80a45ffc291539ba0",
-           processData: true,
-           data: {},
-           dataType: "json",
-           xhrFields: {
-          withCredentials: true
-        },
-           success: function (data) {
-               processData(data);
-           }
-});
-
- 
-function processData(data){
- console.log(data);
-}
-*/
 $(document).ready( function () {
   //construct data table object with options
   var restTable = $('#restaurant_table').DataTable( {
@@ -31,11 +7,18 @@ $(document).ready( function () {
     "ordering": false
   });
 
+  var search_terms = '{{ js_search_terms|escapejs }}';
+  console.log(search_terms);
+
   //there is no data in the table
   if ($('#restaurant_table tr').length === 2) {
     //hide the dataTable
     $('#restaurant_table').hide();
     restTable.columns().visible(false);
+
+    //put placeholder text in search bars
+    $( "input[name=searchQuery]" ).attr("placeholder", "Which Restaurant?");
+    $( "input[name=searchCity]" ).attr("placeholder", "Which City?");
     //animate the search bar
     $( "input[name=searchQuery]" ).focus(function() {
     $( "input[name=searchCity]").css({
@@ -63,16 +46,6 @@ $(document).ready( function () {
   $("input[value='restaurantSearch']" ).click(function() {
     $("input[name='searchQuery']").attr("placeholder", "Which Restaurant?");
   });
-
-  /*
-  //register click event for table rows.
-  $('#restaurant_table tbody').on( 'click', 'tr', function () {
-    console.log( $(this).html() );
-    var cellText = ($('#restaurant_table td').html());
-    window.location.href = "cellText";
-  });
-*/
-
 
   $('#menu_table').DataTable( {
     paging: false,

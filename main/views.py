@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.template import RequestContext
+from django.core import serializers
 
 from .models import Restaurant, MenuItem
 from .parsers import Venue, Dish
@@ -45,6 +46,10 @@ class IndexView(TemplateView):
             elif (search_terms['searchType'] == 'dishSearch'): 
                 dishes = self.dish_search(search_terms)
                 context['dishes'] = dishes
+
+            context['search_terms'] = search_terms
+            json_serializer = serializers.get_serializer("json")()
+            # js_search_terms = json_serializer.serialize(search_terms, ensure_ascii=False)
             context['request'] = self.request
             context['search'] = self.request.GET['searchQuery']
         return context
@@ -61,8 +66,6 @@ class IndexView(TemplateView):
         return venue_list
 
     def dish_search(self, search_terms):
-        return []
-        '''
         dish_list = []
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
         venue_client = VenueApiClient(KEY)
@@ -72,7 +75,6 @@ class IndexView(TemplateView):
             d = Dish(dish_dict, t)
             dish_list.append(d)
         return dish_list
-        '''
  
 """       
 class RestaurantSearchView(TemplateView):

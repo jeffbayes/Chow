@@ -21,9 +21,11 @@
                 
                 <div id="wrap">
                     <form class="form-signin span8" id="user_form" method="get" action="">
+                    
 
                         <div id = 'search-type-toggle'>
                         <span style="color:gray; padding-right:18px;"> Search by: </span>
+
                         <input id="search-type-toggle-cbox" type="radio" name="searchType" value="restaurantSearch" checked>
                         <label for="restaurant"><span><span></span></span>Restaurant</label> 
 
@@ -31,9 +33,9 @@
                         <label for="dish"><span><span></span></span>Dish</label>
                         </div>
 
-                        <input id="search" name="searchQuery" type="text" placeholder="Which Restaurant?">
+                        <input id="search" name="searchQuery" type="text" placeholder={{ search_terms.search_query }}>
                         <input class="search_submit" value="Rechercher" type="submit">
-                        <input class="search" name="searchCity" type="text" placeholder="Which City?">
+                        <input class="search" name="searchCity" type="text" placeholder={{ search_terms.city }}>
                         <br>
                         <br>
                         <select id='selectState' name="selectState">
