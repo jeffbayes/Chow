@@ -13,10 +13,7 @@ class Test(unittest.TestCase):
     def make_venue_obj(self):
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
         venue_client = VenueApiClient(KEY)
-        venue_items = venue_client.search(locality = 'Eugene',region="OR", name = 'Belly')
-
-        item =  venue_items['objects'][0]
-        v = Venue(item,t)
+        v = Venue('c6c9fee9eb6fd87f176e',t)
         return v
 
     def test_attrs(self):

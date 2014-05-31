@@ -8,17 +8,15 @@ KEY = '2d36afa81b05f641ec3382d9992b8cec3d64a4e4'
 
 class Venue(object):
 
-    def __init__(self,locu_object,searchTime=None):
+    def __init__(self,venue_id,searchTime=None):
         self.venue_client = VenueApiClient(KEY)
-        self.locu_object = locu_object
-        self.parse_locu()
+        self.locu_object = self.venue_client.get_details(venue_id)["objects"][0]
+        self.set_attrs()
+        
         if searchTime:
             self.searchTime = time.strftime( "%H:%M:%S",searchTime)
             self.searchDay = time.strftime("%A",searchTime)
-        self.menu = []
         
-
-
     def get_attr(self,attr):
         if attr in self.attrs:
             return self.attrs[attr]
@@ -27,7 +25,10 @@ class Venue(object):
 
 
 
-    def parse_locu(self):
+    def set_attrs(self):
+        """
+        Sets the Venue attrs
+        """
         dna = "Data Not Available"
         self.name = self.locu_object.get("name",dna)
         self.address = self.locu_object.get("street_address",dna)
@@ -35,7 +36,10 @@ class Venue(object):
         self.venue_id = self.locu_object.get("id",dna)
         self.lat = self.locu_object.get("lat",dna)
         self.long = self.locu_object.get("long",dna)
-        self.details = self.venue_client.get_details(self.venue_id)
+        self.has_menu = self.locu_object.get("has_menu",dna)
+        self.categories = self.locu_object.get("categories")
+        if self.has_menu:
+            self.set_menu()
         # if self.searchDay:
         #     hours_today = details["objects"][0]["open_hours"][self.searchDay]
         #     if hours_today:        
@@ -50,9 +54,7 @@ class Venue(object):
         Must be called when venue page is loaded. We don't do it in the init
         so we don't have to parse a menu for all the venues in a query.
         """
-        
-
-        for menu in self.details["objects"][0]["menus"]:
+        for menu in self.locu_object["menus"]:
             for section in menu["sections"]:
                 for sub_section in section["subsections"]:
                     for item in sub_section["contents"]:

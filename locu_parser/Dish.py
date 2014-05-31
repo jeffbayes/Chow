@@ -22,6 +22,12 @@ class Dish(object):
             self.load_rating_from_venue()
 
 
+    def __eq__(self,other):
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def get_attr(self,attr):
         instance_variables = self.__dict__
         return instance_variables.get(attr)
@@ -40,6 +46,8 @@ class Dish(object):
         self.venue = self.locu_object["venue"].get("name")
         self.venue_id = self.locu_object["venue"].get("id")
         self.id = self.locu_object.get("id")
+
+
 
     def load_rating_from_id(self):
         """
