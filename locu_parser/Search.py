@@ -23,7 +23,7 @@ class Search(object):
             filter(not_restruant,venues)
         return venues
 
-
+    @staticmethod
     def search_dishes(name,city='',state=''):
         menu_item_client= MenuItemApiClient(KEY)
         response = menu_item_client.search(name=name,locality = city, region=state)["objects"]
