@@ -22,7 +22,7 @@ class Search(object):
         venues =[]
         if response:
             venues = [Venue(entry,"search") for entry in response]
-            not_restruant = lambda venue: not(all(c in ['restaurant', 'other'] for c in venue.categories ))
+            not_restruant = lambda venue: all(c in ['restaurant', 'other'] for c in venue.categories )
             filter(not_restruant,venues)
         return venues
 
