@@ -18,8 +18,8 @@ class Search(object):
         response = venue_client.search(name=name,locality = city, region=state)
         venues =[]
         if response["objects"]:
-            venues = [Venue(result["id"]) for result in response]
-            not_restruant = lambda venue: not(any(x in Venue.categories for x in ['restaurant', 'other']))
+            venues = [Venue(entry,"search") for entry in response["objects"]]
+            not_restruant = lambda venue: not(any(x in venue.categories for x in ['restaurant', 'other']))
             filter(not_restruant,venues)
         return venues
 
