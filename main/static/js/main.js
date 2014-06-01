@@ -1,5 +1,8 @@
 $(document).ready( function () {
-  //construct data table object with options
+
+  /*-----INDEX.HTML JAVASCRIPT-----*/
+  /*-------------------------------*/
+  //construct DataTable object with options
   var restTable = $('#restaurant_table').DataTable( {
     paging: false,
     scrollY: 400,
@@ -7,49 +10,25 @@ $(document).ready( function () {
     "ordering": false
   });
 
-  //there is no data in the table
-  console.log($('#restaurant_table td').html() );
-  if ($('#restaurant_table td').html() == 'No data available in table') {
-    //hide the dataTable
-    $('#restaurant_table').hide();
-    restTable.columns().visible(false);
-
-    //put placeholder text in search bars
-    $( "input[name=searchQuery]" ).attr("placeholder", "Which Restaurant?");
-    $( "input[name=searchCity]" ).attr("placeholder", "Which City?");
-    //animate the search bar
-    $( "input[name=searchQuery]" ).focus(function() {
-    $( "input[name=searchCity]").css({
-      '-webkit-animation-name': 'expandSearchBar',
-      '-webkit-animation-duration': '1s',
-      '-webkit-animation-timing-function': 'åcubic-bezier(0.000, 0.795, 0.000, 1.000)',
-      
-      //TODO - add vendor prefixes
-
-      'width': '350px'
-      });
-    });
-  } else {
-    $( "input[name=searchQuery]" ).css({
-      'width': '350px'
-    });
-    $( "input[name=searchCity]" ).css({
-      'width': '350px'
-    });
-  }
-
+  //change placeholder text based on which search type is selected.
   $("input[value='dishSearch']" ).click(function() {
+    alert ('clicked');
     $("input[name='searchQuery']").attr("placeholder", "Which Dish?");
   });
   $("input[value='restaurantSearch']" ).click(function() {
     $("input[name='searchQuery']").attr("placeholder", "Which Restaurant?");
   });
 
+  /*---RESTAURANT.HTML JAVASCRIPT---*/
+  /*-------------------------------*/
   $('#menu_table').DataTable( {
     paging: false,
     scrollY: 600,
     searching: false,
-    "ordering": false
+    "ordering": false,
+    "oLanguage": {
+        "sEmptyTable":     "Sorry, this restaurant does not have menu data!"
+    }
   });
 
     $('.star').raty({
@@ -70,20 +49,3 @@ $(document).ready( function () {
       }
     });
 });
-
-
-
-function searchText() {
-  var searchValue = document.getElementById('search').value;
-  console.log(searchValue);
-  var string;
-}
-
-function httpGet(theUrl) {
-    var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false );
-    xmlHttp.send();
-    return xmlHttp.responseText;
-}

@@ -21,19 +21,22 @@
                 <div id="wrap">
                     <form class="form-signin span8" id="user_form" method="get" action="">
                         <div id = 'search-type-toggle'>
-                        <span style="color:gray; padding-right:18px;"> Search by: </span>
-                        <input id="search-type-toggle-cbox" type="radio" name="searchType" value="restaurantSearch" checked>
-                        <label for="restaurant"><span><span></span></span>Restaurant</label> 
+                        {% if search_terms.searchType == "dishSearch" %}
+                            <span style="color:gray; padding-right:18px;"> Search by: </span>
+                            <input id="search-type-toggle-cbox" type="radio" name="searchType" value="restaurantSearch">
+                            <label for="restaurant"><span><span></span></span>Restaurant</label> 
 
-                        <input id="search-type-toggle-cbox" type="radio" name="searchType" value="dishSearch">
-                        <label for="dish"><span><span></span></span>Dish</label>
-                        </div>
+                            <input id="search-type-toggle-cbox" type="radio" name="searchType" value="dishSearch" checked>
+                            <label for="dish"><span><span></span></span>Dish</label>
+                        {% else %}
+                            <span style="color:gray; padding-right:18px;"> Search by: </span>
+                            <input id="search-type-toggle-cbox" type="radio" name="searchType" value="restaurantSearch" checked>
+                            <label for="restaurant"><span><span></span></span>Restaurant</label> 
 
-                        <input id="search" name="searchQuery" type="text" text={{ search_terms.search_query }}>
-                        <input class="search_submit" value="Rechercher" type="submit">
-                        <input class="search" name="searchCity" type="text" text={{ search_terms.city }}>
-                        <br>
-                        <br>
+                            <input id="search-type-toggle-cbox" type="radio" name="searchType" value="dishSearch">
+                            <label for="dish"><span><span></span></span>Dish</label>
+                        {% endif %}
+                        <span style='padding-right: 5px;'>In which state? </span>
                         <select id='selectState' name="selectState">
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -87,45 +90,66 @@
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
                         </select>
-                        <br>
+                        </div>
+                            <div class='search-form'>
+                            {% if search_terms %}
+                                <div class = "search-wrapper cf" name='search-restaurant'> 
+                                    <input id='search' type="text" value = {{ search_terms.search_query }} required="yes" name='searchQuery'>
+                                </div>
+                                <div class = "search-wrapper cf"> 
+                                    <input id='search' type="text" value = {{ search_terms.city }} required="yes" name='searchCity'> 
+                                    <button type="submit">Search</button>
+                                </div>
+                            {% else %}
+                                <div class = "search-wrapper cf" name='search-restaurant'> 
+                                    <input id='search' type="text" placeholder = "Which Restaurant?" required="yes" name='searchQuery'>
+                                </div>
+                                <div class = "search-wrapper cf"> 
+                                    <input id='search' type="text" placeholder = 'Which City?' required="yes" name='searchCity'> 
+                                    <button type="submit">Search</button>
+                                </div>
+                            {% endif %}
+                            </div>
                     </form> <!-- user_form -->
                 </div> <!-- wrap -->
                 <br>
                 <br>
-                <table id="restaurant_table" class="display">
-                <thead>
-                    <tr>
-                        {% if venues %}
-                            <th>Restaurant Name</th>
-                            <th>Address</th>
-                            <th>Phone Number</th>
-                        {% elif dishes %}
-                            <th>Dish Name</th>
-                            <th>Restaurant</th>
-                            <th>Price</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                {% if venues %}
-                    {% for v in venues %}
+                {% if search_terms %}
+                    <table id="restaurant_table" class="display">
+                    <thead>
                         <tr>
-                            <td><a href="{{ v.venue_id }}">{{ v.name }}</a></td>
-                            <td>{{ v.address }}</td>
-                            <td>{{ v.phone }}</td>
+                            {% if venues %}
+                                <th>Restaurant Name</th>
+                                <th>Address</th>
+                                <th>Phone Number</th>
+                            {% elif dishes %}
+                                <th>Dish Name</th>
+                                <th>Restaurant</th>
+                                <th>Price</th>
+                            {% endif %}
                         </tr>
-                    {% endfor %}
-                {% elif dishes %}
-                    {% for d in dishes %}
-                        <tr>
-                            <td><a href="{{ d.venue_id }}">{{ d.name }}</a></td>
-                            <td>{{ d.venue }}</td>
-                            <td>{{ d.price }}</td>
-                        </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                    {% if venues %}
+                        {% for v in venues %}
+                            <tr>
+                                <td><a href="{{ v.venue_id }}">{{ v.name }}</a></td>
+                                <td>{{ v.address }}</td>
+                                <td>{{ v.phone }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% elif dishes %}
+                        {% for d in dishes %}
+                            <tr>
+                                <td><a href="{{ d.venue_id }}">{{ d.name }}</a></td>
+                                <td>{{ d.venue }}</td>
+                                <td>{{ d.price }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                    </table>
                 {% endif %}
-                </tbody>
-                </table>
                 <br>
             </div>
         </div>
