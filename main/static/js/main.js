@@ -8,7 +8,8 @@ $(document).ready( function () {
   });
 
   //there is no data in the table
-  if ($('#restaurant_table tr').length === 2) {
+  console.log($('#restaurant_table td').html() );
+  if ($('#restaurant_table td').html() == 'No data available in table') {
     //hide the dataTable
     $('#restaurant_table').hide();
     restTable.columns().visible(false);
@@ -46,7 +47,7 @@ $(document).ready( function () {
 
   $('#menu_table').DataTable( {
     paging: false,
-    scrollY: 400,
+    scrollY: 600,
     searching: false,
     "ordering": false
   });

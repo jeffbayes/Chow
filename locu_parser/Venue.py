@@ -49,6 +49,9 @@ class Venue(object):
         dna = "Data Not Available"
         self.name = self.locu_object.get("name",dna)
         self.address = self.locu_object.get("street_address",dna)
+        self.postal_code = self.locu_object.get("postal_code",dna)
+        self.locality = self.locu_object.get("locality",dna)
+        self.region = self.locu_object.get("region",dna)
         self.phone = self.locu_object.get("phone",dna)
         self.venue_id = self.locu_object.get("id",dna)
         self.lat = self.locu_object.get("lat",dna)
@@ -64,9 +67,6 @@ class Venue(object):
         #     if hours_today:        
         #         self.attrs["available"] = LocuHelper.isOpen(hours_today,self.searchTime)
 
-        
-
-
     def set_menu(self):
         """
         Parse the locu json and creates a list of Dish objects
@@ -80,9 +80,7 @@ class Venue(object):
                         item["venue"] = self.locu_object
                         if item["type"] == "ITEM":
                             dish = Dish(item,'venue')
-
                             self.menu.append(dish)
 if __name__ == '__main__':
     pass
     
-

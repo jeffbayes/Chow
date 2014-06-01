@@ -6,6 +6,7 @@ from django.template import RequestContext
 from .models import Restaurant, MenuItem
 from locu_parser.Venue import Venue
 from locu_parser.Dish import Dish
+from locu_parser import Search
 from locu import MenuItemApiClient
 from locu import VenueApiClient
 
@@ -58,9 +59,10 @@ class IndexView(TemplateView):
         venue_client = VenueApiClient(KEY)
         response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['search_query'])
         venues = response['objects']
+        print(venues)
         for venue_dict in venues:
             print(venue_dict)
-            v = Venue(venue_dict['id'], t)
+            v = Venue(venue_dict, 'search', t)
             venue_list.append(v)
         return venue_list
 
@@ -74,51 +76,21 @@ class IndexView(TemplateView):
             d = Dish(dish_dict, t)
             dish_list.append(d)
         return dish_list
- 
-"""       
-class RestaurantSearchView(TemplateView):
-    ### Restaurant search view. Currently in testing.
-    template_name = 'index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchView, self).get_context_data(**kwargs)
-        search_term = self.request.GET['search']
-        if search_term:
-            venues = venue_search(search_term)
-            venues['query_match'] = venues['objects']
-            context['request'] = self.request
-            context['search'] = self.request.GET['search']
-        return context
-        
-    def venue_search(search_term):
-        t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
-        venue_client = VenueApiClient(KEY)
-        venues = venue_client.search(locality = 'Eugene', name = search_term)  
-        return venues
-"""
-
 
 class RestaurantView(TemplateView):
     template_name = "restaurant.html"
 
     def get_context_data(self, **kwargs):
         context = super(RestaurantView, self).get_context_data(**kwargs)
-        print ('runnin get_context_data')
         venue_id = context['restaurant_name']
-        print(venue_id)
-        response = self.get_venue_info_and_menu(venue_id)
+        restaurant_profile = self.get_venue_info_and_menu(venue_id)
+        context['restaurant'] = restaurant_profile
         return context
 
     def get_venue_info_and_menu(self, venue_id):
-        print ("runnin")
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
-        venue_client = VenueApiClient(KEY)
-        restaurantProfile = Venue('715b3fc8c0798faf91ae', t)
-        print(restaurantProfile.phone)
-        print(restaurantProfile.address)
-        print(restaurantProfile.menu[0].name)
-        print(restaurantProfile.menu[1].name)
-        return restaurantProfile
+        restaurant_profile = Venue('715b3fc8c0798faf91ae', 'venue', t)
+        return restaurant_profile
     
 """
 class ThrowawayView(TemplateView):

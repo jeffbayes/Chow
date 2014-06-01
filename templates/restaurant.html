@@ -21,20 +21,18 @@
             <div class="jumbotron">
             <div class="restaurantHeader">
             <div class="restaurantInfo">
-                <h1>{{ restaurant_name }}</h1>
+                <h1>{{ restaurant.name }}</h1>
                 <div class="restaurantDetails">
                     <div class="address">
-                        <span class="streetAddress">1340 Alder St</span>
-                        <span class="locality">Eugene</span>
-                        <span class="region">OR</span>
-                        <span class="postalCode">97401</span>
+                        <span class="streetAddress">{{ restaurant.street_address }}</span>
+                        <span class="locality">{{ restaurant.locality }}</span>
+                        <span class="region">{{ restaurant.region }}</span>
+                        <span class="postalCode">{{ restaurant.postal_code }}</span>
                     </div> <!-- address -->
-                    <div class="phoneNumber">541-666-1313</div>
-                    <div class="cusineType">Middle-Eastern, Mediterranean</div>
+                    <div class="phoneNumber">{{ restaurant.phone }}</div>
                 </div> <!-- restaurantDetails -->
             </div> <!-- restaurantInfo -->
             </div> <!-- restaurantHeader -->
-                <br>
                 <br>
                 <!-- test -->
                 {{ request }}
@@ -47,42 +45,20 @@
                 </tr>
             </thead>
             <tbody>
+                    {% for dish in restaurant.menu %}
                     <tr>
                         <td>
                             <div class="entry">
                                 <div class="menuHeader">
-                                    <div class="price">7.95</div>
-                                    <span class="title">Cheeseburger</span>
+                                    <div class="price">{{ dish.price }}</div>
+                                    <span class="title">{{ dish.name }}</span>
                                     <div class="star"> </div>
                                 </div>
-                                <div class="description">Delicious and delecious for the win.</div>
+                                <div class="description">{{ dish.description }}</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="entry">
-                                <div class="menuHeader">
-                                    <div class="price">5.00</div>
-                                    <span class="title">Hamburger</span>
-                                    <div class="star"> </div>
-                                </div>
-                                <div class="description">Who orders this?</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="entry">
-                                <div class="menuHeader">
-                                    <div class="price">12.95</div>
-                                    <span class="title">Mac N' Cheese With Truffle Oil</span>
-                                    <div class="star"> </div>
-                                </div>
-                                <div class="description">This is definitely not pretentious. Serverd with water on the side in a mason jar.</div>
-                            </div>
-                        </td>
-                    </tr>
+                {% endfor %}
             </tbody>
         </table>
         <br>
