@@ -42,8 +42,6 @@ class Dish(object):
         self.venue_id = self.locu_object["venue"].get("id")
         self.id = self.locu_object.get("id",na)
 
-
-
     def load_rating_from_id(self):
         """
         load the rating and number of ratings from database.

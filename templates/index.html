@@ -18,14 +18,10 @@
         <h1>Chowahua!</h1>
         <div class="container">
             <div class="jumbotron">
-                
                 <div id="wrap">
                     <form class="form-signin span8" id="user_form" method="get" action="">
-                    
-
                         <div id = 'search-type-toggle'>
                         <span style="color:gray; padding-right:18px;"> Search by: </span>
-
                         <input id="search-type-toggle-cbox" type="radio" name="searchType" value="restaurantSearch" checked>
                         <label for="restaurant"><span><span></span></span>Restaurant</label> 
 
@@ -33,9 +29,9 @@
                         <label for="dish"><span><span></span></span>Dish</label>
                         </div>
 
-                        <input id="search" name="searchQuery" type="text" placeholder={{ search_terms.search_query }}>
+                        <input id="search" name="searchQuery" type="text" text={{ search_terms.search_query }}>
                         <input class="search_submit" value="Rechercher" type="submit">
-                        <input class="search" name="searchCity" type="text" placeholder={{ search_terms.city }}>
+                        <input class="search" name="searchCity" type="text" text={{ search_terms.city }}>
                         <br>
                         <br>
                         <select id='selectState' name="selectState">
@@ -99,19 +95,35 @@
                 <table id="restaurant_table" class="display">
                 <thead>
                     <tr>
-                        <th>Restaurant Name</th>
-                        <th>Address</th>
-                        <th>Phone Number</th>
+                        {% if venues %}
+                            <th>Restaurant Name</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                        {% elif dishes %}
+                            <th>Dish Name</th>
+                            <th>Restaurant</th>
+                            <th>Price</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
-                {% for v in venues %}
-                    <tr>
-                        <td><a href="{{ v.venue_id }}">{{ v.name }}</a></td>
-                        <td>{{ v.street_address }}</td>
-                        <td>{{ v.phone }}</td>
-                    </tr>
-                {% endfor %}
+                {% if venues %}
+                    {% for v in venues %}
+                        <tr>
+                            <td><a href="{{ v.venue_id }}">{{ v.name }}</a></td>
+                            <td>{{ v.address }}</td>
+                            <td>{{ v.phone }}</td>
+                        </tr>
+                    {% endfor %}
+                {% elif dishes %}
+                    {% for d in dishes %}
+                        <tr>
+                            <td><a href="{{ d.venue_id }}">{{ d.name }}</a></td>
+                            <td>{{ d.venue }}</td>
+                            <td>{{ d.price }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
                 </tbody>
                 </table>
                 <br>

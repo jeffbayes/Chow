@@ -6,7 +6,7 @@ from django.template import RequestContext
 from .models import Restaurant, MenuItem
 from locu_parser.Venue import Venue
 from locu_parser.Dish import Dish
-from locu_parser import Search
+from locu_parser.Search import Search
 from locu import MenuItemApiClient
 from locu import VenueApiClient
 
@@ -42,40 +42,14 @@ class IndexView(TemplateView):
         if self.request.GET.get('searchQuery'):
             search_terms['search_query'] = self.request.GET['searchQuery']
             if (search_terms['searchType'] == 'restaurantSearch'):
-                venues = self.venue_search(search_terms)
-                context['venues'] = venues
+                context['venues'] = Search.venue_search(search_terms)
             elif (search_terms['searchType'] == 'dishSearch'): 
-                dishes = self.dish_search(search_terms)
-                context['dishes'] = dishes
-
+                context['dishes'] = Search.dish_search(search_terms)
             context['search_terms'] = search_terms
             context['request'] = self.request
             context['search'] = self.request.GET['searchQuery']
         return context
         
-    def venue_search(self, search_terms):
-        venue_list = []
-        t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
-        venue_client = VenueApiClient(KEY)
-        response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['search_query'])
-        venues = response['objects']
-        print(venues)
-        for venue_dict in venues:
-            print(venue_dict)
-            v = Venue(venue_dict, 'search', t)
-            venue_list.append(v)
-        return venue_list
-
-    def dish_search(self, search_terms):
-        dish_list = []
-        t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
-        venue_client = VenueApiClient(KEY)
-        response = venue_client.search(locality = search_terms['city'], region = search_terms['state'], name = search_terms['search_query'])
-        dishes = response['objects']
-        for dish_dict in dishes:
-            d = Dish(dish_dict, t)
-            dish_list.append(d)
-        return dish_list
 
 class RestaurantView(TemplateView):
     template_name = "restaurant.html"
@@ -83,13 +57,14 @@ class RestaurantView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(RestaurantView, self).get_context_data(**kwargs)
         venue_id = context['restaurant_name']
+        print (venue_id)
         restaurant_profile = self.get_venue_info_and_menu(venue_id)
         context['restaurant'] = restaurant_profile
         return context
 
     def get_venue_info_and_menu(self, venue_id):
         t = time.strptime("Monday 12:00:00", "%A %H:%M:%S")
-        restaurant_profile = Venue('715b3fc8c0798faf91ae', 'venue', t)
+        restaurant_profile = Venue(venue_id, 'venue', t)
         return restaurant_profile
     
 """
