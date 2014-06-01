@@ -66,18 +66,6 @@ class Venue(object):
                             dish = Dish(item,'venue')
 
                             self.menu.append(dish)
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
     venue_client = VenueApiClient(KEY)
     venue_items = venue_client.search(locality = 'Eugene',region="OR", name = 'Belly')

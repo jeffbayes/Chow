@@ -116,6 +116,8 @@ class RestaurantView(TemplateView):
         restaurantProfile = Venue('715b3fc8c0798faf91ae', t)
         print(restaurantProfile.phone)
         print(restaurantProfile.address)
+        print(restaurantProfile.menu[0].name)
+        print(restaurantProfile.menu[1].name)
         return restaurantProfile
     
 """
