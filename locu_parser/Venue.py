@@ -8,11 +8,23 @@ KEY = '2d36afa81b05f641ec3382d9992b8cec3d64a4e4'
 
 class Venue(object):
 
-    def __init__(self,venue_id,searchTime=None):
+    def __init__(self,locu_info,caller,searchTime=None):
+        """
+        If caller is a search locu_info will just be a 
+        json dict if it's a venue it'll be a venue  id
+
+        this is to prevent making a ton of venue detail calls
+        """
         self.venue_client = VenueApiClient(KEY)
-        self.locu_object = self.venue_client.get_details(venue_id)["objects"][0]
+        self.caller = caller
         self.menu = [] ## Filled by set_menu()
-        self.set_attrs()
+
+        if caller == 'search':
+            self.locu_object = locu_info
+        elif caller == "venue":
+            self.locu_object = self.venue_client.get_details(locu_info)["objects"][0]
+
+        self.set_attrs(caller)
         
         if searchTime:
             self.searchTime = time.strftime( "%H:%M:%S",searchTime)
@@ -27,10 +39,12 @@ class Venue(object):
             return "Data Not Available"
 
 
-
-    def set_attrs(self):
+    def set_attrs(self,caller):
         """
-        Sets the Venue attrs
+        Sets the Venue attrs. It will only set the menu if the caller is a venue page.
+        This is for two reasons:
+            a) to avoid extraneous venue detail calls
+            b) the locu_object will be a json style dict that won't have a menu entry
         """
         dna = "Data Not Available"
         self.name = self.locu_object.get("name",dna)
@@ -41,8 +55,10 @@ class Venue(object):
         self.long = self.locu_object.get("long",dna)
         self.has_menu = self.locu_object.get("has_menu",dna)
         self.categories = self.locu_object.get("categories")
-        if self.has_menu:
+
+        if self.has_menu and caller=='venue':
             self.set_menu()
+
         # if self.searchDay:
         #     hours_today = details["objects"][0]["open_hours"][self.searchDay]
         #     if hours_today:        
@@ -67,15 +83,6 @@ class Venue(object):
 
                             self.menu.append(dish)
 if __name__ == '__main__':
-    venue_client = VenueApiClient(KEY)
-    venue_items = venue_client.search(locality = 'Eugene',region="OR", name = 'Belly')
-    item =  venue_items['objects'][0]
-    v = Venue(item)
-    v.set_menu()
-    for i in range(50): print
-    d = v.menu[0]
-    print d.get_attr('venue')
-
-
+    pass
     
 
