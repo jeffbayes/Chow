@@ -13,23 +13,32 @@ class Search(object):
         pass
 
     @staticmethod
-    def venue_search(name,city='',state=''):
+    def venue_search(search_terms):
         venue_client = VenueApiClient(KEY)
-        response = venue_client.search(name=name,locality = city, region=state)
+        name = search_terms.get("name",'')
+        city = search_terms.get("city",'')
+        state = search_terms.get("state",'')
+        response = venue_client.search(name=name,locality = city, region=state)["objects"]
         venues =[]
-        if response["objects"]:
-            venues = [Venue(entry,"search") for entry in response["objects"]]
+        if response:
+            venues = [Venue(entry,"search") for entry in response]
             not_restruant = lambda venue: not(any(x in venue.categories for x in ['restaurant', 'other']))
             filter(not_restruant,venues)
         return venues
 
+
+
     @staticmethod
-    def dishe_search(name,city='',state=''):
+    def dish_search(search_terms):
         menu_item_client= MenuItemApiClient(KEY)
+        name = search_terms.get("name",'')
+        city = search_terms.get("city",'')
+        state = search_terms.get("state",'')
         response = menu_item_client.search(name=name,locality = city, region=state)["objects"]
         menu_items = []
-        if response["objects"]:
+        if response:
             menu_items = [Dish(locu_object) for locu_object in response]
+        print type(menu_items)
         return menu_items
 
         
