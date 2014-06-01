@@ -15,14 +15,14 @@ class Search(object):
     @staticmethod
     def venue_search(search_terms):
         venue_client = VenueApiClient(KEY)
-        name = search_terms.get("name",'')
+        name = search_terms.get("search_query",'')
         city = search_terms.get("city",'')
         state = search_terms.get("state",'')
         response = venue_client.search(name=name,locality = city, region=state)["objects"]
         venues =[]
         if response:
             venues = [Venue(entry,"search") for entry in response]
-            not_restruant = lambda venue: not(any(x in venue.categories for x in ['restaurant', 'other']))
+            not_restruant = lambda venue: not(all(c in ['restaurant', 'other'] for c in venue.categories ))
             filter(not_restruant,venues)
         return venues
 
@@ -31,7 +31,7 @@ class Search(object):
     @staticmethod
     def dish_search(search_terms):
         menu_item_client= MenuItemApiClient(KEY)
-        name = search_terms.get("name",'')
+        name = search_terms.get("search_query",'')
         city = search_terms.get("city",'')
         state = search_terms.get("state",'')
         response = menu_item_client.search(name=name,locality = city, region=state)["objects"]
