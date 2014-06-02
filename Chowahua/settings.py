@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'main',
+    'locu_parser',
 )
 
 MIDDLEWARE_CLASSES = (
