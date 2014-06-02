@@ -20,6 +20,8 @@
             <div class="jumbotron">
                 <div id="wrap">
                     <form class="form-signin span8" id="user_form" method="get" action="">
+                    <!--SEARCH_TOGGLE 
+                    Preselect toggle based on server data. -->
                         <div id = 'search-type-toggle'>
                         {% if search_terms.searchType == "dishSearch" %}
                             <span style="color:gray; padding-right:18px;"> Search by: </span>
@@ -36,6 +38,8 @@
                             <input id="search-type-toggle-cbox" type="radio" name="searchType" value="dishSearch">
                             <label for="dish"><span><span></span></span>Dish</label>
                         {% endif %}
+
+                        <!-- STATE SELECT -->
                         <span style='padding-right: 5px;'>In which state? </span>
                         <select id='selectState' name="selectState">
                             <option value="AL">Alabama</option>
@@ -91,7 +95,10 @@
                             <option value="WY">Wyoming</option>
                         </select>
                         </div>
+
+                        <!-- SEARCH_QUERY BARS -->
                             <div class='search-form'>
+                            <!-- prefill search bars with previous search params if they exist -->
                             {% if search_terms %}
                                 <div class = "search-wrapper cf" name='search-restaurant'> 
                                     <input id='search' type="text" value = {{ search_terms.search_query }} required="yes" name='searchQuery'>
@@ -114,10 +121,14 @@
                 </div> <!-- wrap -->
                 <br>
                 <br>
+
+                <!-- DATA TABLE DISPLAY -->
                 {% if search_terms %}
                     <table id="restaurant_table" class="display">
                     <thead>
                         <tr>
+                            <!-- configure column headers based on whether
+                                or not this is a restaurant or dish search  -->
                             {% if venues %}
                                 <th>Restaurant Name</th>
                                 <th>Address</th>
@@ -130,6 +141,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <!-- Populate tables with data from Locu Request -->
                     {% if venues %}
                         {% for v in venues %}
                             <tr>

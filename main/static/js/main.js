@@ -12,12 +12,13 @@ $(document).ready( function () {
 
   //change placeholder text based on which search type is selected.
   $("input[value='dishSearch']" ).click(function() {
-    alert ('clicked');
     $("input[name='searchQuery']").attr("placeholder", "Which Dish?");
   });
   $("input[value='restaurantSearch']" ).click(function() {
     $("input[name='searchQuery']").attr("placeholder", "Which Restaurant?");
   });
+
+
 
   /*---RESTAURANT.HTML JAVASCRIPT---*/
   /*-------------------------------*/
@@ -31,6 +32,7 @@ $(document).ready( function () {
     }
   });
 
+    //Configures display and behavior of rating star plugin.
     $('.star').raty({
       path: STATIC_URL+'/img/',
       click: function(score, evt) {
