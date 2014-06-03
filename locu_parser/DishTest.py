@@ -33,6 +33,10 @@ class DishTest(unittest.TestCase):
         d = self.makeDishobj()
         self.assertTrue(d.get_attr("available"))
 
+    @staticmethod
+    def main():
+        unittest.main()
+
 
 
 

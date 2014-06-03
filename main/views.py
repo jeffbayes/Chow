@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.template import RequestContext
 
-from .models import Restaurant, MenuItem
+from .models import DishEntry
 from locu_parser.Venue import Venue
 from locu_parser.Dish import Dish
 from locu_parser.Search import Search
@@ -72,4 +72,5 @@ class ThrowawayView(TemplateView):
     ### Useful for testing things.
     template_name = "throwaway.html"
     """
-
+if __name__ == '__main__':
+    print "views"

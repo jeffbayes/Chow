@@ -49,7 +49,7 @@ class Dish(object):
         """
         
         """
-        query = MenuItem.filter(venue_id=self.venue_id,name=self.name)
+        query = DishEntry.objects.filter(venue_id=self.venue_id,name=self.name)
         if query.exists():
             self.db_entry = query[0]
         else:
@@ -74,8 +74,8 @@ class Dish(object):
 
         self.db_entry.save()
 
-
-
+if __name__ == '__main__':
+    print "dish"
 
 
 

@@ -23,7 +23,7 @@ search_terms = raw_in.split(',')
 resp = client.search(name =search_terms[0],locality=search_terms[1],region=search_terms[2])
 
 
-if s_type == ("v" or "d"):
+if s_type == "v" or s_type =="d":
 	print json.dumps(resp,indent=4, sort_keys=True)
 else:
 	dets = client.get_details(resp["objects"][0]["id"])

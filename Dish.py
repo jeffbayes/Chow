@@ -1,6 +1,6 @@
 from locu import MenuItemApiClient
 from locu import VenueApiClient
-from LocuHelper import LocuHelper
+from main.models import DishEntry
 import datetime
 import time
 
