@@ -13,9 +13,7 @@ class Dish(object):
         self.venue_client = VenueApiClient(KEY)
         self.locu_object = locu_object
         self.parse_locu(self.locu_object)
-
-
-
+        
     def __eq__(self,other):
         return self.__dict__ == other.__dict__
 
