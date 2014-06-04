@@ -49,12 +49,7 @@ class Dish(object):
         """
         
         """
-        query = DishEntry.objects.filter(venue_id=self.venue_id,name=self.name)
-        if query.exists():
-            self.db_entry = query[0]
-        else:
-            self.db_entry = DishEntry(name=self.name,venue_id=self.venue_id,avg_rating=0,ratings=0)
-            self.db_entry.save()
+
 
         self.ratings = self.db_entry.ratings
         self.avg_rating = self.db_entry.avg_rating
