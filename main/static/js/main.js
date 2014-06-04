@@ -1,3 +1,24 @@
+
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
+function getCurrentUrl() {
+    sPageURL = '?';
+    sPageURL += window.location.search.substring(1);
+    return sPageURL;
+}
+
 $(document).ready( function () {
 
   /**
@@ -20,6 +41,7 @@ function getCookie(name)
             }
         }
     }
+
     return cookieValue;
 }
  
@@ -35,12 +57,55 @@ $.ajaxSetup({
   /*-----INDEX.HTML JAVASCRIPT-----*/
   /*-------------------------------*/
   //construct DataTable object with options
-  var restTable = $('#restaurant_table').DataTable( {
+  var searchType = getUrlParameter('searchType');
+  var resultsTable;
+  if (searchType == "dishSearch") {
+    resultsTable = $('#restaurant_table').DataTable( {
+    paging: false,
+    scrollY: 400,
+    searching: false,
+    "aoColumnDefs": [
+      { "bSortable": false, "aTargets": [ 0,2,3 ] }
+      ]
+    });
+    resultsTable.order([1, 'desc']).draw();
+  } else {
+    resultsTable = $('#restaurant_table').DataTable( {
     paging: false,
     scrollY: 400,
     searching: false,
     "ordering": false
-  });
+    });
+  }
+
+  $('.star-search').raty({
+      path: STATIC_URL+'/img/',
+
+      score: function() {
+        console.log($(this).attr('data-score'));
+        return $(this).attr('data-score');
+        },
+
+      /*On click, determine which dish the user clicked, and what score they gave it. 
+      Submit this score via an Ajax post request with 
+      params: venue_id, dishName, and score*/
+      click: function(score, evt) {
+        var dishName = $(this).attr('dish_name');
+        var venue_id = $(this).attr('venue_id');
+        $.ajax({
+           type:"POST",
+           url: getCurrentUrl(),
+           data: {
+                  'venue_id': venue_id,
+                  'dishName': dishName,
+                  'score':    score
+           },
+           success: function(data){
+               console.log('success...');
+           }
+        });
+      }
+    }); 
 
   //change placeholder text based on which search type is selected.
   $("input[value='dishSearch']" ).click(function() {
@@ -69,6 +134,7 @@ $.ajaxSetup({
       path: STATIC_URL+'/img/',
 
       score: function() {
+        console.log($(this).attr('data-score'));
         return $(this).attr('data-score');
         },
 

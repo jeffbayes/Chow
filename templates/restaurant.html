@@ -19,12 +19,6 @@
     <body>
         <div class="container">
             <div class="jumbotron">
-            <!-- <form action="." method="post">{% csrf_token %}
-                <div class = "search-wrapper cf"> 
-                                    <input id='search' type="text" placeholder = 'Which City?' required="yes" name='searchCity'> 
-                                    <button type="submit">Search</button>
-                </div>
-            </form> -->
             <!-- CONFIGURE RESTAURANT HEADER INFO -->
             <div class="restaurantHeader">
             <div class="restaurantInfo">
@@ -55,7 +49,11 @@
                         <td>
                             <div class="entry">
                                 <div class="menuHeader">
-                                    <div class="price">{{ dish.price }}</div>
+                                    {% if dish.price != 'Not Avalable'%}
+                                        <div class="price">{{dish.price}}</div>
+                                    {% else %}
+                                        <div class="price"></div>
+                                    {% endif %}
                                     <span class="title">{{ dish.name }}</span>
                                     <div class="star" data-score={{ dish.avg_rating }}> </div>
 
@@ -67,6 +65,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <a href="{% url 'index' %}">Back to search</a>
         <br>
             <!-- <div id="star"></div> -->
         </div>

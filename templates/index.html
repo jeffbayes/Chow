@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
+        <script language="javascript">var STATIC_URL = "{{ STATIC_URL|escapejs }}";</script>
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
@@ -101,10 +101,10 @@
                             <!-- prefill search bars with previous search params if they exist -->
                             {% if search_terms %}
                                 <div class = "search-wrapper cf" name='search-restaurant'> 
-                                    <input id='search' type="text" value = {{ search_terms.search_query }} required="yes" name='searchQuery'>
+                                    <input id='search' type="text" value ="{{search_terms.search_query}}" required="yes" name='searchQuery'>
                                 </div>
                                 <div class = "search-wrapper cf"> 
-                                    <input id='search' type="text" value = {{ search_terms.city }} required="yes" name='searchCity'> 
+                                    <input id='search' type="text" value ="{{search_terms.city}}" required="yes" name='searchCity'> 
                                     <button type="submit">Search</button>
                                 </div>
                             {% else %}
@@ -121,7 +121,6 @@
                 </div> <!-- wrap -->
                 <br>
                 <br>
-
                 <!-- DATA TABLE DISPLAY -->
                 {% if search_terms %}
                     <table id="restaurant_table" class="display">
@@ -135,6 +134,7 @@
                                 <th>Phone Number</th>
                             {% elif dishes %}
                                 <th>Dish Name</th>
+                                <th>Rating</th>
                                 <th>Restaurant</th>
                                 <th>Price</th>
                             {% endif %}
@@ -142,6 +142,7 @@
                     </thead>
                     <tbody>
                     <!-- Populate tables with data from Locu Request -->
+                    <!--===== RESTAURANT SEARCH =======-->
                     {% if venues %}
                         {% for v in venues %}
                             <tr>
@@ -151,11 +152,18 @@
                             </tr>
                         {% endfor %}
                     {% elif dishes %}
+                    <!--===== DISH SEARCH =======-->
                         {% for d in dishes %}
                             <tr>
                                 <td><a href="{{ d.venue_id }}">{{ d.name }}</a></td>
-                                <td>{{ d.venue }}</td>
-                                <td>{{ d.price }}</td>
+                                <td> <div class="star-search" data-score={{ d.avg_rating }} venue_id={{d.venue_id}} dish_name="{{d.name}}"><span style='display: none;'>{{ d.avg_rating }}</span></div> </td>
+                                
+                                <td>{{d.venue}}</td>
+                                {% if d.price != none %}
+                                    <td>{{ d.price }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     {% endif %}

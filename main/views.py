@@ -21,7 +21,7 @@ import time
 global KEY 
 KEY = '2d36afa81b05f641ec3382d9992b8cec3d64a4e4'
 
-class IndexView(TemplateView):
+class IndexView(FormMixin, TemplateView):
     ### Home page.
     template_name = "index.html"
         
@@ -30,7 +30,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         search_terms = {} #search_term keys: (['search_query', 'city', 'state', searchType])
-        
+        print (context)
         # !! Get search paramaters from index.html form submission!! #
         if self.request.GET.get('searchType', False):
             search_terms['searchType'] = self.request.GET.get('searchType', False)
@@ -51,6 +51,17 @@ class IndexView(TemplateView):
             context['request'] = self.request
             context['search'] = self.request.GET['searchQuery']
         return context
+
+    def post(self, request, *args, **kwargs):
+        # self.object = self.get_object()
+        context = super(IndexView, self).get_context_data(**kwargs)
+        if request.POST != None:
+            print (request.POST['score'])
+            print (request.POST['dishName'])
+            print (request.POST['venue_id'])
+            Dish.submit_rating(request.POST['venue_id'], request.POST['dishName'], int(request.POST['score']) )
+
+        return self.render_to_response(context)
     
 class RestaurantView(FormMixin, TemplateView):
     template_name = "restaurant.html"
@@ -59,14 +70,6 @@ class RestaurantView(FormMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(RestaurantView, self).get_context_data(**kwargs)
-        c = {}
-        c.update(csrf(self.request))
-        # if (self.request.method == 'POST'):
-        #     print('this is a post')
-        #     print (context)
-        # else:
-        print('this is NOT a post')
-        print (context) 
         venue_id = context['restaurant_id']
         restaurant_profile = self.get_venue_info_and_menu(venue_id)
         context['restaurant'] = restaurant_profile
@@ -75,9 +78,6 @@ class RestaurantView(FormMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         # self.object = self.get_object()
         context = super(RestaurantView, self).get_context_data(**kwargs)
-        print ('something before')
-        print("POST CONTEXT: ", context)
-        print ('something after')
         if request.POST != None:
             # dishToRate = Dish()
             print (request.POST['score'])
