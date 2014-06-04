@@ -43,6 +43,9 @@ class Dish(object):
         self.price = self.locu_object.get("price",na)
         self.venue = self.locu_object["venue"].get("name",na)
         self.venue_id = self.locu_object["venue"].get("id")
+        self.categories = self.locu_object["venue"].get("categories")
+        self.region= self.locu_object["venue"].get("region")
+        self.locality = self.locu_object["venue"].get("locality")
         self.id = self.locu_object.get("id",na)
 
     def get_rating_db(self):

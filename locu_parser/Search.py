@@ -13,6 +13,19 @@ class Search(object):
         pass
 
     @staticmethod
+    def filter_bad_results(obj_list,city,state):
+        """
+        filters the bad locu results
+        """
+        is_restruant =  lambda obj : all(c in  ['restaurant', 'other'] for c in obj.get_attr('categories'))
+        is_in_area = lambda obj: obj.region == state and obj.region == city
+        good_venue =  lambda obj: is_restruant(obj) or is_in_area(obj)
+        filter(good_venue,obj_list)
+
+
+
+
+    @staticmethod
     def venue_search(search_terms):
         venue_client = VenueApiClient(KEY)
         name = search_terms.get("search_query",'')
@@ -22,8 +35,7 @@ class Search(object):
         venues =[]
         if response:
             venues = [Venue(entry,"search") for entry in response]
-            not_restruant = lambda venue: all(c in ['restaurant', 'other'] for c in venue.categories )
-            filter(not_restruant,venues)
+            Search.filter_bad_results(venues,city, state)
         return venues
 
 
@@ -38,9 +50,8 @@ class Search(object):
         menu_items = []
         if response:
             menu_items = [Dish(locu_object) for locu_object in response]
-        print type(menu_items)
+            Search.filter_bad_results(menu_items, city, state)
         return menu_items
-
         
 
 

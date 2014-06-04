@@ -33,10 +33,8 @@ class Venue(object):
 
         
     def get_attr(self,attr):
-        if attr in self.attrs:
-            return self.attrs[attr]
-        else:
-            return "Data Not Available"
+        instance_variables = self.__dict__
+        return instance_variables.get(attr)
 
 
     def set_attrs(self,caller):
