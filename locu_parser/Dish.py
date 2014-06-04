@@ -65,7 +65,6 @@ class Dish(object):
 
         self.ratings = self.db_entry.ratings
         self.avg_rating = self.db_entry.avg_rating
-        print self.ratings, self.avg_rating
 
 
 
