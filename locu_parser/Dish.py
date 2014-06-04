@@ -11,11 +11,11 @@ KEY = '2d36afa81b05f641ec3382d9992b8cec3d64a4e4'
 
 class Dish(object):
 
-    def __init__(self,locu_object,searchTime=None):
+    def __init__(self,locu_object,queryset='',searchTime=None):
         self.venue_client = VenueApiClient(KEY)
         self.locu_object = locu_object
         self.parse_locu(self.locu_object)
-        self.get_rating_db()
+        self.get_rating_db(queryset)
 
 
 
@@ -48,11 +48,15 @@ class Dish(object):
         self.locality = self.locu_object["venue"].get("locality")
         self.id = self.locu_object.get("id",na)
 
-    def get_rating_db(self):
+    def get_rating_db(self,queryset):
         """
         
         """
-        query = DishEntry.objects.filter(venue_id=self.venue_id,name=self.name)
+        if queryset:
+            query = queryset.filter(name=self.name)
+        else:
+            query = DishEntry.objects.filter(venue_id=self.venue_id,name=self.name)
+            
         if query.exists():
             self.db_entry = query[0]
         else:

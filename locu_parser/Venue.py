@@ -1,6 +1,7 @@
 from locu import MenuItemApiClient
 from locu import VenueApiClient
 from Dish import Dish
+from main.models import DishEntry
 import datetime
 import time
 global KEY
@@ -71,13 +72,14 @@ class Venue(object):
         Must be called when venue page is loaded. We don't do it in the init
         so we don't have to parse a menu for all the venues in a query.
         """
+        venue_query = DishEntry.objects.filter(venue_id=self.venue_id)
         for menu in self.locu_object["menus"]:
             for section in menu["sections"]:
                 for sub_section in section["subsections"]:
                     for item in sub_section["contents"]:
                         item["venue"] = self.locu_object
                         if item["type"] == "ITEM":
-                            dish = Dish(item,'venue')
+                            dish = Dish(item,queryset=venue_query)
                             self.menu.append(dish)
 if __name__ == '__main__':
     pass

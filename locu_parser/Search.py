@@ -17,10 +17,15 @@ class Search(object):
         """
         filters the bad locu results
         """
+        print city,state
         is_restruant =  lambda obj : all(c in  ['restaurant', 'other'] for c in obj.get_attr('categories'))
-        is_in_area = lambda obj: obj.region == state and obj.region == city
-        good_venue =  lambda obj: is_restruant(obj) or is_in_area(obj)
-        filter(good_venue,obj_list)
+        is_in_area = lambda obj: obj.region == state
+        for obj in obj_list:
+            print obj.region, obj.locality
+            print "in area",is_in_area(obj)
+        good_venue =  lambda obj: is_restruant(obj) and is_in_area(obj)
+        print filter(good_venue,obj_list)
+        return filter(good_venue,obj_list)
 
 
 
@@ -35,7 +40,7 @@ class Search(object):
         venues =[]
         if response:
             venues = [Venue(entry,"search") for entry in response]
-            Search.filter_bad_results(venues,city, state)
+            venues = Search.filter_bad_results(venues,city, state)
         return venues
 
 
@@ -50,7 +55,7 @@ class Search(object):
         menu_items = []
         if response:
             menu_items = [Dish(locu_object) for locu_object in response]
-            Search.filter_bad_results(menu_items, city, state)
+            menu_items = Search.filter_bad_results(menu_items, city, state)
         return menu_items
         
 
