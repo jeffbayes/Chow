@@ -1,9 +1,14 @@
+from django.core.context_processors import csrf
 from django.shortcuts import render, render_to_response
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormMixin
+
+from django import forms
+from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.template import RequestContext
 
-from .models import Restaurant, MenuItem
+from .models import DishEntry
 from locu_parser.Venue import Venue
 from locu_parser.Dish import Dish
 from locu_parser.Search import Search
@@ -47,16 +52,40 @@ class IndexView(TemplateView):
             context['search'] = self.request.GET['searchQuery']
         return context
     
-class RestaurantView(TemplateView):
+class RestaurantView(FormMixin, TemplateView):
     template_name = "restaurant.html"
     '''gets the data passed from restaurant.html and creates a venue details 
     search request to Locu API using the venue_id'''
+
     def get_context_data(self, **kwargs):
         context = super(RestaurantView, self).get_context_data(**kwargs)
-        venue_id = context['restaurant_name']
+        c = {}
+        c.update(csrf(self.request))
+        # if (self.request.method == 'POST'):
+        #     print('this is a post')
+        #     print (context)
+        # else:
+        print('this is NOT a post')
+        print (context) 
+        venue_id = context['restaurant_id']
         restaurant_profile = self.get_venue_info_and_menu(venue_id)
         context['restaurant'] = restaurant_profile
         return context
+
+    def post(self, request, *args, **kwargs):
+        # self.object = self.get_object()
+        context = super(RestaurantView, self).get_context_data(**kwargs)
+        print ('something before')
+        print("POST CONTEXT: ", context)
+        print ('something after')
+        if request.POST != None:
+            # dishToRate = Dish()
+            print (request.POST['score'])
+            print (request.POST['dishName'])
+            print (request.POST['venue_id'])
+            Dish.submit_rating(request.POST['venue_id'], request.POST['dishName'], int(request.POST['score']) )
+
+        return self.render_to_response(context)
 
         '''requests Locu Details for restaurant giving us info like menu
         venue_id is the Locu Restaurant venue_id'''
@@ -70,4 +99,5 @@ class ThrowawayView(TemplateView):
     ### Useful for testing things.
     template_name = "throwaway.html"
     """
-
+if __name__ == '__main__':
+    print "views"

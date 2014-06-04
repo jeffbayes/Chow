@@ -19,10 +19,17 @@
     <body>
         <div class="container">
             <div class="jumbotron">
+            <!-- <form action="." method="post">{% csrf_token %}
+                <div class = "search-wrapper cf"> 
+                                    <input id='search' type="text" placeholder = 'Which City?' required="yes" name='searchCity'> 
+                                    <button type="submit">Search</button>
+                </div>
+            </form> -->
             <!-- CONFIGURE RESTAURANT HEADER INFO -->
             <div class="restaurantHeader">
             <div class="restaurantInfo">
-                <h1>{{ restaurant.name }}</h1>
+                <h1 id='restaurant-name'>{{ restaurant.name }}</h1>
+                <span id='restaurant-id' style="visibility: hidden; display: none;">{{ restaurant_id }}</span>
                 <div class="restaurantDetails">
                     <div class="address">
                         <span class="streetAddress">{{ restaurant.street_address }}</span>
@@ -50,7 +57,8 @@
                                 <div class="menuHeader">
                                     <div class="price">{{ dish.price }}</div>
                                     <span class="title">{{ dish.name }}</span>
-                                    <div class="star"> </div>
+                                    <div class="star" data-score={{ dish.avg_rating }}> </div>
+
                                 </div>
                                 <div class="description">{{ dish.description }}</div>
                             </div>
